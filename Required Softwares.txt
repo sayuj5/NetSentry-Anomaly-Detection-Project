@@ -1,0 +1,36 @@
+Required Softwares
+ 
+ 1. Development Environment
+
+Integrated Development Environment (IDE): An IDE provides a full-featured environment with a code editor, debugger, and other tools.
+
+PyCharm: A popular, robust IDE for Python. The Community Edition is free and sufficient for this project.
+
+
+Visual Studio Code (VS Code): A lightweight but powerful code editor with extensive extensions. With the Python extension, it functions like a full-fledged IDE and is a top choice for data science.
+
+Jupyter Notebook/JupyterLab: These web-based notebooks are ideal for data exploration and visualization. They let you combine code, output, and explanatory text in a single document, making them perfect for the initial phases of your project.
+
+ 
+ 2. Core Programming & Data Science Libraries:
+
+Python libraries that you'll install using pip.
+
+Python: The programming language itself. You should use Python 3.8 or a newer version.
+
+pandas: This is the go-to library for data manipulation and analysis. It's essential for cleaning your network data, handling missing values, and organizing it into a tabular format called a DataFrame.
+
+NumPy: A foundational library for numerical computing. It's crucial for performing fast mathematical operations on large arrays of data.
+
+Scikit-learn: This is the workhorse of the project. It's a comprehensive library for machine learning that contains all the algorithms you'll need for both supervised and unsupervised learning, including Isolation Forest, SVM, and classifiers.
+
+Matplotlib & Seaborn: These are the primary libraries for data visualization. You'll use them to create plots and graphs to understand your data and present your results.
+ 
+
+ 3. Network Analysis Tools (Optional but Recommended)
+
+If the project involves processing raw network traffic (like .pcap files) instead of a pre-processed dataset, then we need these tools.
+
+Wireshark: The world's leading network protocol analyzer. You can use it to visually inspect and understand network packets, which is great for learning and debugging your feature engineering process.
+
+Tshark: The command-line version of Wireshark. It's perfect for scripting and automating the extraction of features from .pcap files, which is more scalable than using Wireshark's graphical interface.

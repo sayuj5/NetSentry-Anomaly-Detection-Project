@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetSentry: A Deep Learning Framework for Real-Time Network Anomaly Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <h1 class="logo">Net<span class="accent">Sentry</span></h1>
+            <p class="logo-sub">Deep Learning Framework</p>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" onclick="switchTab(event, 'dashboard-view')">Dashboard</a>
+                <a href="#" class="nav-item" onclick="switchTab(event, 'metrics-view')">Model Matrices</a>
+                <a href="#" class="nav-item" onclick="switchTab(event, 'config-view')">System Upgrades</a>
+            </nav>
+            
+            <div class="theme-switch-wrapper">
+                <span class="muted">Light Mode</span>
+                <label class="theme-switch" for="theme-checkbox">
+                    <input type="checkbox" id="theme-checkbox" onchange="toggleTheme()">
+                    <div class="theme-slider round"></div>
+                </label>
+            </div>
+
+            <div class="system-status">
+                <div class="status-indicator live"></div>
+                <span>System Online</span>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <h2>NetSentry Dashboard Overview</h2>
+                <div class="global-metrics">
+                    <div class="metric-badge"><span class="label">Packets</span> <span class="val cyan">125,973</span></div>
+                    <div class="metric-badge"><span class="label">Anomalies</span> <span class="val red">58,630</span></div>
+                    <div class="metric-badge"><span class="label">Security Status</span> <span class="val green">DEFENDING</span></div>
+                </div>
+            </header>
+
+            <!-- Views Container -->
+            <div class="views-container">
+                
+                <!-- View 1: Dashboard Overview -->
+                <div id="dashboard-view" class="view active">
+                    <div class="panel packet-sniffer">
+                        <div class="panel-header">
+                            <h3>Live Capture (Scapy/PyShark)</h3>
+                            <label class="switch">
+                                <input type="checkbox" id="live-capture-toggle" onchange="toggleCapture()">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="terminal" id="terminal-output">
+                            <span class="muted">Waiting for packet stream... Toggle to intercept.</span><br>
+                        </div>
+                    </div>
+
+                    <div class="panel-grid">
+                        <div class="panel">
+                            <h3>Active Upgrades</h3>
+                            <ul class="upgrade-list">
+                                <li><span class="status-dot green"></span> Hyperparameter Tuned (n_iter=5)</li>
+                                <li><span class="status-dot green"></span> Ensemble Hybrid Architecture Enabled</li>
+                                <li><span class="status-dot green"></span> Early Stopping Regularization Active</li>
+                                <li><span class="status-dot red pulse"></span> Adv. ML Mitigation Pending</li>
+                            </ul>
+                        </div>
+                        <div class="panel">
+                            <h3>Adversarial ML Mitigation</h3>
+                            <div class="adv-mitigation">
+                                <p class="muted">Inject stealth anomalies to train models against evasion.</p>
+                                <div class="gauge-container">
+                                    <div class="gauge">
+                                        <div class="gauge-fill" style="width: 72%;"></div>
+                                        <span class="gauge-text">Resilience: 72%</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary glow" onclick="runAdversarial()">RUN ADVERSARIAL DRILL</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View 2: Model Matrices -->
+                <div id="metrics-view" class="view">
+                    <div class="tab-system">
+                        <div class="tabs">
+                            <button class="tab-btn active" onclick="openModelTab(event, 'rf-matrix')">Random Forest</button>
+                            <button class="tab-btn" onclick="openModelTab(event, 'mlp-matrix')">Keras MLP</button>
+                            <button class="tab-btn" onclick="openModelTab(event, 'iso-matrix')">Isolation Forest</button>
+                        </div>
+                        
+                        <div id="rf-matrix" class="tab-content active">
+                            <div class="matrix-grid">
+                                <div class="matrix-box heatmap">
+                                    <h4>Confusion Matrix</h4>
+                                    <div class="grid-2x2">
+                                        <div class="cell normal">TN: 13,446 <span class="sub">(Normal)</span></div>
+                                        <div class="cell error">FP: 22 <span class="sub"></span></div>
+                                        <div class="cell error">FN: 15 <span class="sub"></span></div>
+                                        <div class="cell normal">TP: 11,712 <span class="sub">(Attack)</span></div>
+                                    </div>
+                                </div>
+                                <div class="matrix-box">
+                                    <h4>Classification Report</h4>
+                                    <table class="data-table">
+                                        <tr><th>Class</th><th>Precision</th><th>Recall</th><th>F1-Score</th></tr>
+                                        <tr><td>Normal (0)</td><td>1.00</td><td>1.00</td><td>1.00</td></tr>
+                                        <tr><td>Anomaly (1)</td><td>1.00</td><td>1.00</td><td>1.00</td></tr>
+                                    </table>
+                                </div>
+                                <div class="matrix-box stat-box">
+                                    <h4>AUC Score</h4>
+                                    <div class="big-stat cyan">0.9997</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="mlp-matrix" class="tab-content">
+                            <div class="matrix-grid">
+                                <div class="matrix-box heatmap">
+                                    <h4>Confusion Matrix</h4>
+                                    <div class="grid-2x2">
+                                        <div class="cell normal">TN: 13,425</div>
+                                        <div class="cell error">FP: 43</div>
+                                        <div class="cell error">FN: 28</div>
+                                        <div class="cell normal">TP: 11,699</div>
+                                    </div>
+                                </div>
+                                <div class="matrix-box">
+                                    <h4>Classification Report</h4>
+                                    <table class="data-table">
+                                        <tr><th>Class</th><th>Precision</th><th>Recall</th><th>F1-Score</th></tr>
+                                        <tr><td>Normal (0)</td><td>0.99</td><td>0.99</td><td>0.99</td></tr>
+                                        <tr><td>Anomaly (1)</td><td>0.99</td><td>0.99</td><td>0.99</td></tr>
+                                    </table>
+                                </div>
+                                <div class="matrix-box stat-box">
+                                    <h4>Loss (Early Stop)</h4>
+                                    <div class="big-stat cyan">0.0210</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="iso-matrix" class="tab-content">
+                            <div class="matrix-grid">
+                                <div class="matrix-box heatmap">
+                                    <h4>Confusion Matrix (Unsupervised)</h4>
+                                    <div class="grid-2x2">
+                                        <div class="cell normal">TN: 10,749</div>
+                                        <div class="cell error">FP: 2,719</div>
+                                        <div class="cell error">FN: 2,720</div>
+                                        <div class="cell normal">TP: 9,007</div>
+                                    </div>
+                                </div>
+                                <div class="matrix-box">
+                                    <h4>Classification Report</h4>
+                                    <table class="data-table">
+                                        <tr><th>Class</th><th>Precision</th><th>Recall</th><th>F1-Score</th></tr>
+                                        <tr><td>Normal (0)</td><td>0.80</td><td>0.80</td><td>0.80</td></tr>
+                                        <tr><td>Anomaly (1)</td><td>0.77</td><td>0.77</td><td>0.77</td></tr>
+                                    </table>
+                                </div>
+                                <div class="matrix-box stat-box">
+                                    <h4>Contamination</h4>
+                                    <div class="big-stat cyan">0.465</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View 3: System Upgrades Config -->
+                <div id="config-view" class="view">
+                    <div class="panel-grid">
+                        <div class="panel">
+                            <h3>Hyperparameter Tuning Params</h3>
+                            <div class="slider-group">
+                                <label>Learning Rate (MLP)</label>
+                                <input type="range" min="1" max="100" value="10" class="neon-slider">
+                            </div>
+                            <div class="slider-group">
+                                <label>Dropout Ratio</label>
+                                <input type="range" min="1" max="50" value="20" class="neon-slider">
+                            </div>
+                            <div class="slider-group">
+                                <label>Max Tree Depth (RF)</label>
+                                <input type="range" min="1" max="100" value="50" class="neon-slider">
+                            </div>
+                        </div>
+                        
+                        <div class="panel">
+                            <h3>Ensemble Architecture Voting Config</h3>
+                            <p class="muted">Distribute voting weight across models for the Hybrid prediction.</p>
+                            <div class="slider-group">
+                                <label>Random Forest (Precision)</label>
+                                <input type="range" min="0" max="100" value="60" class="neon-slider rf-slider">
+                            </div>
+                            <div class="slider-group">
+                                <label>Keras MLP (Deep Extraction)</label>
+                                <input type="range" min="0" max="100" value="30" class="neon-slider mlp-slider">
+                            </div>
+                            <div class="slider-group">
+                                <label>Isolation Forest (Outlier Sens.)</label>
+                                <input type="range" min="0" max="100" value="10" class="neon-slider iso-slider">
+                            </div>
+                            <button class="btn btn-outline" style="margin-top:20px; width:100%;">Apply Architecture</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

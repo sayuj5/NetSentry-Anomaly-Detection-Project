@@ -1,0 +1,85 @@
+Network Anomaly Detection Project Workflow Explanation
+
+This project aims to detect unusual or suspicious patterns in network traffic that could indicate cyberattacks or system malfunctions. It achieves this by building and evaluating machine learning models. The workflow follows a standard data science pipeline, adapted for network anomaly detection, incorporating both supervised and unsupervised learning techniques.
+
+Here's a detailed explanation of each stage:
+
+Data Collection and Acquisition:
+
+Purpose: To obtain raw network traffic data for training and testing the anomaly detection models.
+
+Process: We acquire publicly available benchmark datasets, specifically recommending NSL-KDD (or KDD Cup 1999/NSL-KDD), which contains a wide range of network connection records, labeled as either "normal" or various types of "attack" (anomaly).
+
+Project File: The raw kdd_train.csv (derived from KDDTrain+.txt) is placed in the data/ directory.
+
+Data Preprocessing and Feature Engineering:
+
+Purpose: To transform the raw data into a clean, numerical format suitable for machine learning algorithms and to extract meaningful features.
+
+Process:
+
+Handling Missing Values: Basic handling (e.g., dropping rows) if any are present.
+
+Categorical Encoding: Network data often has categorical features (e.g., protocol_type, service, flag). These are converted into numerical representations using One-Hot Encoding.
+
+Feature Scaling: Numerical features are scaled (e.g., using StandardScaler) to ensure that no single feature dominates the learning process due to its larger magnitude.
+
+Target Label Transformation: For supervised models, the multi-class labels (e.g., 'normal', 'smurf', 'neptune') are converted into a binary target: '0' for normal traffic and '1' for anomalous traffic.
+
+Project File: data_handler.py contains all the logic for load_data and preprocess_data.
+
+Data Splitting:
+
+Purpose: To divide the preprocessed data into distinct training and testing sets.
+
+Process: The dataset is split into X_train, X_test, y_train, and y_test. The training sets (X_train, y_train) are used to teach the models, while the testing sets (X_test, y_test) are reserved to evaluate their performance on unseen data, preventing overfitting. stratify=y_binary ensures that the proportion of normal and anomalous samples is maintained in both train and test sets.
+
+Project File: data_handler.py (specifically the split_data function).
+
+Model Selection and Training:
+
+Purpose: To select and train various machine learning models to learn patterns from the processed data.
+
+Process:
+
+Supervised Learning:
+
+Random Forest Classifier: A powerful ensemble learning method that builds multiple decision trees and merges their predictions to improve accuracy and control overfitting. It's excellent for classification tasks.
+
+Keras Multi-Layer Perceptron (MLP): A deep learning neural network. It consists of an input layer, one or more hidden layers (with activation functions like 'relu'), and an output layer (with 'softmax' for binary classification). MLPs can learn complex non-linear relationships in the data.
+
+Unsupervised Learning:
+
+Isolation Forest: An algorithm specifically designed for anomaly detection. It works by isolating anomalies (outliers) rather than profiling normal data. It builds isolation trees and measures how "isolatable" each data point is.
+
+Project File: model_trainer.py contains functions like train_supervised_rf, train_deep_learning_mlp, and train_unsupervised_iforest.
+
+Model Evaluation:
+
+Purpose: To assess how well the trained models perform in identifying anomalies on unseen data.
+
+Process:
+
+Prediction: Each trained model makes predictions on the X_test dataset.
+
+Metrics: Performance is measured using standard classification metrics:
+
+Accuracy: Overall correctness of predictions.
+
+Precision: Of all predicted anomalies, how many were actually anomalies.
+
+Recall (Sensitivity): Of all actual anomalies, how many did the model correctly identify.
+
+F1-Score: The harmonic mean of precision and recall.
+
+Confusion Matrix: A table that summarizes the performance, showing True Positives, True Negatives, False Positives, and False Negatives.
+
+For Isolation Forest, the output is converted to match the binary (0/1) labels for consistent evaluation.
+
+Project File: model_trainer.py (specifically the evaluate_model function).
+
+Results and Insights:
+
+Purpose: To understand the strengths and weaknesses of different models and to draw conclusions about the effectiveness of the anomaly detection system.
+
+Process: The printed reports and visualized confusion matrices help compare the models and identify the best-performing approach for the given dataset and problem.

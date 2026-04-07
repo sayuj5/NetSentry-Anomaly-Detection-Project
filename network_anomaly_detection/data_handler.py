@@ -51,7 +51,8 @@ def preprocess_data(df, categorical_cols, target_col, normal_label):
     
     # CRITICAL FIX: Clean the Target Label column
     # KDD labels often contain trailing periods/spaces (e.g., 'normal.')
-    df[target_col] = df[target_col].astype(str).str.strip().str.replace('.', '', regex=False)
+    # Use rstrip to remove only trailing periods rather than removing ALL dots from the label text.
+    df[target_col] = df[target_col].astype(str).str.strip().str.rstrip('.')
     
     # 1. Separate features and target
     df_features = df.drop(columns=[target_col])
@@ -92,9 +93,17 @@ def split_data(X, y, test_size=0.2, random_state=42):
     Splits the data into training and testing sets, stratifying on y.
     """
     # Use stratify=y to ensure the train/test split has the same proportion of anomalies
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=test_size, random_state=random_state, stratify=y
-    )
+    try:
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=test_size, random_state=random_state, stratify=y
+        )
+    except ValueError as e:
+        # This can happen when one class is missing or too small for stratification
+        print(f"Warning: Stratified split failed ({e}). Falling back to non-stratified split.")
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=test_size, random_state=random_state, stratify=None
+        )
+
     print(f"Data split: Train size={len(X_train)}, Test size={len(X_test)}")
     # Log the number of samples per class in the test set for verification
     test_normal = np.sum(y_test == 0)
