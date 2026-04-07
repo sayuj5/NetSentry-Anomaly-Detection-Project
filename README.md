@@ -1,38 +1,48 @@
 # NetSentry: A Deep Learning Framework for Real-Time Network Anomaly Detection
 
-![NetSentry Banner](network_anomaly_detection/dashboard/index.html) <!-- Note: This is a placeholder for a real banner if you have one -->
+An end-to-end machine learning project for detecting network intrusions (anomalies) using the KDD (Knowledge Discovery and Data Mining) dataset. The pipeline compares the effectiveness of supervised tree-based, deep learning, and unsupervised models for binary classification (Normal vs. Anomaly).
 
-## Overview
-NetSentry is a high-performance network anomaly detection system that leverages advanced Machine Learning and Deep Learning architectures to identify potential security threats in real-time. Built on a hybrid framework, it utilizes supervised and unsupervised learning techniques to provide a robust defense against network-based attacks.
-
-## Key Features
+## 🚀 Key Features
 - **Hybrid Detection Model**: Combines Random Forest, Keras MLP (Deep Learning), and Isolation Forest (Unsupervised) for maximum accuracy.
-- **Deep Learning Architecture**: Utilizes a Multi-Layer Perceptron (MLP) with early stopping and regularization to prevent overfitting on complex network patterns.
-- **Real-Time Visualization**: Interactive dashboard with light and dark mode support, providing instant insight into network health and model performance.
-- **Adversarial Resiliency**: Includes tools for adversarial training and hyperparameter tuning to ensure the system remains effective against evolving threat vectors.
-- **Packet Interception Simulation**: Integrated terminal for simulating live traffic capture and anomaly detection.
+- **Deep Learning Architecture**: Utilizes a Multi-Layer Perceptron (MLP) with early stopping and regularization.
+- **Real-Time Visualization**: Interactive dashboard with light and dark mode support.
+- **Performance Metrics**: Generates detailed Classification Reports, AUC scores, Confusion Matrices, and Feature Importance plots.
+- **Adversarial Resiliency**: Includes tools for adversarial training and hyperparameter tuning.
 
-## Technology Stack
-- **Backend**: Python (Pandas, NumPy, Scikit-Learn, TensorFlow/Keras)
-- **Frontend**: HTML5, Vanilla CSS, JavaScript (ES6+)
-- **Data Source**: KDD Cup 1999 Network Intrusion Dataset
-
-## System Architecture
-The framework follows a modular pipeline:
-1. **Data Ingestion**: Robust loading of network traffic datasets.
-2. **Preprocessing**: One-hot encoding of categorical features and label binarization.
-3. **Model Training**: Orchestrated training of multiple models with cross-validation.
-4. **Evaluation**: Comprehensive performance analysis via Confusion Matrices and AUC scores.
-5. **Deployment**: Real-time monitoring via the NetSentry Dashboard.
-
-## How to Run
+## 🛠️ Project Setup
 
 ### Prerequisites
-- Python 3.8+
-- Required libraries: `pip install -r network_anomaly_detection/requirements.txt`
+Ensure you have Python 3.8+ and Git installed on your system.
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/sayuj5/Anomaly-Detection-Project.git
+cd Anomaly-Detection-Project
+```
+
+### 2. Set up the Environment
+It is highly recommended to use a virtual environment:
+```bash
+# Windows
+python -m venv venv
+.\venv\Scripts\activate
+
+# Linux/macOS
+source venv/bin/activate
+```
+
+### 3. Install Dependencies
+```bash
+pip install -r network_anomaly_detection/requirements.txt
+```
+
+### 4. Data Preparation
+Place your KDD training dataset file inside a `data/` folder and name it `kdd_train.csv`.
+
+## ▶️ Execution
 
 ### Running the Analysis
-To train the models and generate performance plots, run the following from the root directory:
+To train the models and generate performance plots:
 ```bash
 python network_anomaly_detection/main.py
 ```
@@ -40,7 +50,10 @@ python network_anomaly_detection/main.py
 ### Accessing the Dashboard
 Open `network_anomaly_detection/dashboard/index.html` in your web browser to view the interactive command center.
 
-## Project Structure
+## 📊 Results Overview
+The supervised models demonstrate high performance on the KDD test set, confirming the robustness of the Deep Learning and Random Forest architectures.
+
+## 📂 Project Structure
 ```text
 ├── data/                       # Dataset directory
 ├── network_anomaly_detection/   # Core logic
@@ -52,9 +65,6 @@ Open `network_anomaly_detection/dashboard/index.html` in your web browser to vie
 │   └── requirements.txt        # Python dependencies
 └── README.md                   # Project documentation
 ```
-
-## Credits
-This project was developed as part of a Deep Learning framework for network security.
 
 ---
 **Secure your network with NetSentry.**
