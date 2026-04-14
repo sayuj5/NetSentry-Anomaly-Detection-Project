@@ -18,6 +18,7 @@
             <p class="logo-sub">Deep Learning Framework</p>
             <nav class="nav-menu">
                 <a href="#" class="nav-item active" onclick="switchTab(event, 'dashboard-view')">Dashboard</a>
+                <a href="#" class="nav-item" onclick="switchTab(event, 'live-detection-view')">Live Detection</a>
                 <a href="#" class="nav-item" onclick="switchTab(event, 'metrics-view')">Model Matrices</a>
                 <a href="#" class="nav-item" onclick="switchTab(event, 'config-view')">System Upgrades</a>
             </nav>
@@ -92,7 +93,78 @@
                     </div>
                 </div>
 
-                <!-- View 2: Model Matrices -->
+                <!-- View 2: LIVE DETECTION & ATTACK SIMULATOR -->
+                <div id="live-detection-view" class="view">
+                    <div class="panel packet-sniffer">
+                        <div class="panel-header">
+                            <h3>🔴 Real-Time Attack Detection</h3>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                                <div>
+                                    <p style="color: #888; font-size: 12px; margin-bottom: 5px;">Simulated Attacks:</p>
+                                    <button class="btn btn-primary" onclick="startAttackSimulation()">▶ Simulate Attacks</button>
+                                    <button class="btn btn-danger" onclick="stopAttackSimulation()">⏹ Stop</button>
+                                </div>
+                                <div>
+                                    <p style="color: #888; font-size: 12px; margin-bottom: 5px;">Real Kali Attacks:</p>
+                                    <button class="btn btn-primary" style="background: linear-gradient(135deg, #ff6b6b, #ff8c42);" onclick="startRealCapture()">📡 Capture Real Traffic</button>
+                                    <button class="btn btn-danger" onclick="stopRealCapture()">⏹ Stop Capture</button>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline" onclick="clearDetectionLog()" style="width: 100%;">🗑 Clear Log</button>
+                        </div>
+                        <div id="detection-stats" class="detection-stats">
+                            <div class="stat-card">
+                                <div class="stat-label">Anomalies Detected</div>
+                                <div class="stat-value red" id="anomaly-count">0</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Normal Traffic</div>
+                                <div class="stat-value green" id="normal-count">0</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Detection Rate</div>
+                                <div class="stat-value cyan" id="detection-rate">0%</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Status</div>
+                                <div class="stat-value" id="detection-status"><span class="status-dot green pulse"></span> Idle</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ATTACK TYPES SIMULATOR -->
+                    <div class="panel-grid">
+                        <div class="panel">
+                            <h3>📤 DDoS Attacks</h3>
+                            <button class="btn btn-attack" onclick="launchDDosAttack()">🔴 SYN Flood</button>
+                            <button class="btn btn-attack" onclick="launchICMPAttack()">🔴 ICMP Flood</button>
+                            <button class="btn btn-attack" onclick="launchHTTPAttack()">🔴 HTTP DDoS</button>
+                        </div>
+
+                        <div class="panel">
+                            <h3>🔍 Reconnaissance Attacks</h3>
+                            <button class="btn btn-attack" onclick="launchPortScan()">🔴 Port Scan</button>
+                            <button class="btn btn-attack" onclick="launchUDPScan()">🔴 UDP Scan</button>
+                        </div>
+
+                        <div class="panel">
+                            <h3>🔐 Unauthorized Access</h3>
+                            <button class="btn btn-attack" onclick="launchSSHBruteForce()">🔴 SSH Brute Force</button>
+                            <button class="btn btn-attack" onclick="launchFTPBruteForce()">🔴 FTP Brute Force</button>
+                            <button class="btn btn-attack" onclick="launchSQLInjection()">🔴 SQL Injection</button>
+                        </div>
+                    </div>
+
+                    <!-- DETECTION LOG -->
+                    <div class="panel detection-log-panel">
+                        <h3>🔔 Detection Alert Log</h3>
+                        <div class="terminal detection-log" id="detection-log">
+                            <span class="muted">Waiting for live attacks or simulations...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View 3: Model Matrices -->
                 <div id="metrics-view" class="view">
                     <div class="tab-system">
                         <div class="tabs">

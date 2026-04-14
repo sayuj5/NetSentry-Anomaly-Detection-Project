@@ -1,5 +1,8 @@
 import time
 import os
+import webbrowser
+import joblib
+import pickle
 from data_handler import load_data, preprocess_data, split_data
 from model_trainer import (
     train_supervised_rf, 
@@ -58,9 +61,40 @@ def run_project(absolute_data_path=None):
         iforest_model = train_unsupervised_iforest(X_train, IFOR_CONTAMINATION)
         evaluate_model(iforest_model, X_test, y_test, "Isolation Forest", is_unsupervised=True)
         
-        # FINAL FIX: Display all prepared plots and block script execution
-        # The script will pause here until all plot windows are closed.
-        plt.show(block=True) 
+        # Skip interactive plots for automation - save to files instead
+        # plt.show(block=True) 
+        
+        # ===== SAVE TRAINED MODELS =====
+        print("\n--- Saving Trained Models for Live Detection ---")
+        
+        # Save Random Forest model
+        joblib.dump(rf_model, 'trained_rf_model.pkl')
+        print("[OK] Random Forest model saved: trained_rf_model.pkl")
+        
+        # Save Keras MLP model
+        mlp_model.save('trained_mlp_model.h5')
+        print("[OK] Keras MLP model saved: trained_mlp_model.h5")
+        
+        # Save Isolation Forest model
+        joblib.dump(iforest_model, 'trained_iforest_model.pkl')
+        print("[OK] Isolation Forest model saved: trained_iforest_model.pkl")
+        
+        # Save preprocessor info
+        with open('feature_names.pkl', 'wb') as f:
+            pickle.dump(feature_names, f)
+        print("[OK] Feature names saved: feature_names.pkl")
+        
+        # Launch Dashboard in browser
+        print("\n--- Launching Interactive Dashboard ---")
+        dashboard_path = os.path.join(os.path.dirname(__file__), 'dashboard', 'index.html')
+        dashboard_url = 'file://' + os.path.abspath(dashboard_path)
+        
+        try:
+            webbrowser.open(dashboard_url)
+            print(f"[OK] Dashboard launched: {dashboard_url}")
+        except Exception as e:
+            print(f"⚠️  Could not auto-launch dashboard: {e}")
+            print(f"   Open manually: {dashboard_path}")
         
     except Exception as e:
         print(f"\nProject encountered a fatal error: {e}")
